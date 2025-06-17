@@ -85,33 +85,33 @@ app.delete('/upload/:folderName/:filename', (req, res) => {
     }
 });
 
-// Эндпоинт для удаления всех изображений в папке (DELETE-запрос)
-// app.delete('/images/:folderName', (req, res) => {
-//     const folderName = req.params.folderName;
-//     const folderPath = path.join(baseDirectory, folderName);
+//Эндпоинт для удаления всех изображений в папке (DELETE-запрос)
+app.delete('/images/:folderName', (req, res) => {
+    const folderName = req.params.folderName;
+    const folderPath = path.join(baseDirectory, folderName);
 
-//     if (fs.existsSync(folderPath)) {
-//         fs.readdir(folderPath, (err, files) => {
-//             if (err) {
-//                 console.error("Ошибка при чтении папки:", err);
-//                 return res.status(500).send('Ошибка при чтении папки!');
-//             }
+    if (fs.existsSync(folderPath)) {
+        fs.readdir(folderPath, (err, files) => {
+            if (err) {
+                console.error("Ошибка при чтении папки:", err);
+                return res.status(500).send('Ошибка при чтении папки!');
+            }
 
-//             files.forEach(file => {
-//                 const filePath = path.join(folderPath, file);
-//                 fs.unlink(filePath, err => {
-//                     if (err) {
-//                         console.error("Ошибка при удалении файла:", err);
-//                     }
-//                 });
-//             });
+            files.forEach(file => {
+                const filePath = path.join(folderPath, file);
+                fs.unlink(filePath, err => {
+                    if (err) {
+                        console.error("Ошибка при удалении файла:", err);
+                    }
+                });
+            });
 
-//             res.send(`Все файлы в папке "${folderName}" успешно удалены!`);
-//         });
-//     } else {
-//         res.status(404).send('Папка не найдена!');
-//     }
-// });
+            res.send(`Все файлы в папке "${folderName}" успешно удалены!`);
+        });
+    } else {
+        res.status(404).send('Папка не найдена!');
+    }
+});
 app.delete('/images/:folderName', (req, res) => {
     const folderName = req.params.folderName;
     const folderPath = path.join(baseDirectory, folderName);
